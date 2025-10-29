@@ -1,119 +1,119 @@
 # Cambridge Translator - Chrome Extension
 
-Extension dịch thuật tương tự Google Translate nhưng sử dụng phát âm từ Cambridge Dictionary.
+Translation extension similar to Google Translate but uses pronunciation from Cambridge Dictionary.
 
-## Tính năng
+## Features
 
-- Dịch văn bản với nhiều ngôn ngữ
-- Phát âm từ Cambridge Dictionary (UK/US)
-- Hiển thị phiên âm IPA
-- Chọn text trên trang web để dịch nhanh
-- Tooltip dịch nhanh khi chọn text
-- Context menu (chuột phải) để dịch
+- Translate text with multiple languages
+- Pronunciation from Cambridge Dictionary (UK/US)
+- Display IPA pronunciation
+- Select text on webpage for quick translation
+- Quick translation tooltip when selecting text
+- Context menu (right-click) to translate
 
-## Cài đặt
+## Installation
 
-1. Mở Chrome và truy cập `chrome://extensions/`
-2. Bật "Developer mode" ở góc trên bên phải
+1. Open Chrome and go to `chrome://extensions/`
+2. Enable "Developer mode" in the top right corner
 3. Click "Load unpacked"
-4. Chọn thư mục chứa extension này
-5. Extension sẽ xuất hiện trong thanh công cụ
+4. Select the folder containing this extension
+5. Extension will appear in the toolbar
 
-## Hướng dẫn sử dụng
+## Usage Guide
 
-### Cách 1: Dùng Popup
-1. Click vào icon extension trên thanh công cụ
-2. Nhập hoặc paste text cần dịch
-3. Chọn ngôn ngữ nguồn và đích
-4. Click "Dịch"
-5. Với từ tiếng Anh đơn lẻ, click nút phát âm để nghe từ Cambridge
+### Method 1: Use Popup
+1. Click the extension icon in the toolbar
+2. Enter or paste the text to translate
+3. Select source and target language
+4. Click "Translate"
+5. For single English words, click the pronunciation button to hear from Cambridge
 
-### Cách 2: Chọn text trên trang web
-1. Chọn (bôi đen) text trên bất kỳ trang web nào
-2. Icon dịch nhanh sẽ xuất hiện
-3. Click vào icon để mở popup với text đã chọn
-4. Hoặc chuột phải và chọn "Dịch với Cambridge Translator"
+### Method 2: Select text on webpage
+1. Select (highlight) text on any webpage
+2. Quick translate icon will appear
+3. Click the icon to open popup with selected text
+4. Or right-click and select "Translate with Cambridge Translator"
 
-### Phím tắt
-- `Ctrl + Enter`: Dịch text trong popup
+### Shortcuts
+- `Ctrl + Enter`: Translate text in popup
 
-## Cấu trúc file
+## File Structure
 
 ```
 translate/
-├── manifest.json          # Cấu hình extension
-├── popup.html            # Giao diện popup
-├── popup.js              # Logic popup
-├── popup.css             # Style popup
+├── manifest.json          # Extension configuration
+├── popup.html            # Popup interface
+├── popup.js              # Popup logic
+├── popup.css             # Popup style
 ├── background.js         # Service worker, fetch Cambridge data
-├── content.js            # Script chạy trên trang web
-├── content.css           # Style cho tooltip
-├── icons/                # Icons cho extension
-└── README.md             # File này
+├── content.js            # Script running on webpage
+├── content.css           # Style for tooltip
+├── icons/                # Icons for extension
+└── README.md             # This file
 ```
 
-## Tạo icons
+## Create Icons
 
-Bạn cần tạo 3 file icon PNG:
+You need to create 3 PNG icon files:
 - `icons/icon16.png` (16x16px)
 - `icons/icon48.png` (48x48px)
 - `icons/icon128.png` (128x128px)
 
-Bạn có thể:
-1. Tạo bằng Photoshop/GIMP/Figma
-2. Sử dụng online tool như https://www.favicon-generator.org/
-3. Hoặc tạm thời download icon từ internet
+You can:
+1. Create with Photoshop/GIMP/Figma
+2. Use online tool like https://www.favicon-generator.org/
+3. Or temporarily download icon from internet
 
-## Cách hoạt động
+## How It Works
 
-### Dịch văn bản
-- Sử dụng Google Translate API (free tier) để dịch text
+### Translate Text
+- Use Google Translate API (free tier) to translate text
 
-### Phát âm Cambridge
-1. Extension fetch trang từ điển Cambridge (ví dụ: https://dictionary.cambridge.org/dictionary/english/favorite)
-2. Parse HTML để trích xuất:
-   - Phiên âm IPA (ví dụ: /ˈfeɪ.vər.ɪt/)
-   - URL file audio MP3 (ưu tiên US, fallback UK)
-3. Play audio khi user click nút phát âm
+### Cambridge Pronunciation
+1. Extension fetches Cambridge dictionary page (example: https://dictionary.cambridge.org/dictionary/english/favorite)
+2. Parse HTML to extract:
+   - IPA pronunciation (example: /ˈfeɪ.vər.ɪt/)
+   - MP3 audio file URL (prefer US, fallback UK)
+3. Play audio when user clicks pronunciation button
 
 ### Background Service Worker
-- File `background.js` xử lý việc fetch dữ liệu từ Cambridge
-- Bypass CORS bằng cách fetch trong background context
-- Parse HTML để tìm phiên âm và audio URL
+- File `background.js` handles fetching data from Cambridge
+- Bypass CORS by fetching in background context
+- Parse HTML to find pronunciation and audio URL
 
-## Lưu ý
+## Notes
 
-1. **Icons**: Bạn cần thêm file icons vào thư mục `icons/` để extension hiển thị đúng
-2. **Cambridge API**: Extension scrape trực tiếp từ Cambridge website, có thể bị lỗi nếu Cambridge thay đổi cấu trúc HTML
-3. **Google Translate**: Sử dụng free endpoint, có thể bị rate limit nếu dùng quá nhiều
-4. **Permissions**: Extension cần quyền truy cập `dictionary.cambridge.org` và `translate.googleapis.com`
+1. **Icons**: You need to add icon files to the `icons/` folder for the extension to display correctly
+2. **Cambridge API**: Extension scrapes directly from Cambridge website, may break if Cambridge changes HTML structure
+3. **Google Translate**: Uses free endpoint, may be rate limited if used too much
+4. **Permissions**: Extension needs access to `dictionary.cambridge.org` and `translate.googleapis.com`
 
-## Cải tiến có thể làm
+## Possible Improvements
 
-- [ ] Cache kết quả dịch và phát âm
-- [ ] Thêm lịch sử dịch
-- [ ] Cho phép chọn giọng UK hoặc US
-- [ ] Thêm nhiều ngôn ngữ hơn
+- [ ] Cache translation and pronunciation results
+- [ ] Add translation history
+- [ ] Allow selection of UK or US accent
+- [ ] Add more languages
 - [ ] Dark mode
-- [ ] Keyboard shortcuts tùy chỉnh
-- [ ] Lưu từ vựng yêu thích
+- [ ] Custom keyboard shortcuts
+- [ ] Save favorite vocabulary
 
 ## Troubleshooting
 
-### Extension không load
-- Kiểm tra Chrome version (cần v88+)
-- Kiểm tra lỗi trong `chrome://extensions/`
+### Extension not loading
+- Check Chrome version (needs v88+)
+- Check errors in `chrome://extensions/`
 - Reload extension
 
-### Không có phát âm
-- Kiểm tra từ có tồn tại trong Cambridge Dictionary
-- Mở console để xem lỗi (F12 trong popup)
-- Thử từ khác (ví dụ: "hello", "favorite")
+### No pronunciation
+- Check if word exists in Cambridge Dictionary
+- Open console to see errors (F12 in popup)
+- Try different word (example: "hello", "favorite")
 
-### Không dịch được
-- Kiểm tra kết nối internet
-- Google Translate API có thể bị block
-- Thử reload extension
+### Cannot translate
+- Check internet connection
+- Google Translate API may be blocked
+- Try reloading extension
 
 ## License
 
