@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cambridge Translator - Options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="#1a73e8">
+          <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+        </svg>
+        Cambridge Translator
+      </h1>
+      <p class="subtitle">Extension Options</p>
+    </div>
+
+    <div class="settings-section">
+      <h2>Your Primary Language:</h2>
+      <select id="primaryLang" class="lang-select">
+        <option value="vi">Tiếng Việt (Vietnamese)</option>
+        <option value="en">English</option>
+        <option value="zh-CN">中文/简体 (Chinese Simplified)</option>
+        <option value="zh-TW">中文/繁體 (Chinese Traditional)</option>
+        <option value="ja">日本語 (Japanese)</option>
+        <option value="ko">한국어 (Korean)</option>
+        <option value="th">ไทย (Thai)</option>
+        <option value="fr">Français (French)</option>
+        <option value="de">Deutsch (German)</option>
+        <option value="es">Español (Spanish)</option>
+        <option value="it">Italiano (Italian)</option>
+        <option value="pt">Português (Portuguese)</option>
+        <option value="ru">Русский (Russian)</option>
+        <option value="ar">العربية (Arabic)</option>
+        <option value="hi">हिन्दी (Hindi)</option>
+        <option value="id">Bahasa Indonesia (Indonesian)</option>
+        <option value="ms">Bahasa Melayu (Malay)</option>
+        <option value="tr">Türkçe (Turkish)</option>
+        <option value="nl">Nederlands (Dutch)</option>
+        <option value="pl">Polski (Polish)</option>
+        <option value="uk">Українська (Ukrainian)</option>
+      </select>
+    </div>
+
+    <div class="settings-section">
+      <h2>Translation Popup:</h2>
+      <p class="section-description">When I select a word or phrase:</p>
+
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="popupMode" value="icon" id="mode-icon">
+          <div class="radio-content">
+            <div class="radio-title">Show icon to click and view popup.</div>
+            <div class="radio-description">Translation icon will appear when you select text.</div>
+          </div>
+        </label>
+
+        <label class="radio-option">
+          <input type="radio" name="popupMode" value="immediate" id="mode-immediate">
+          <div class="radio-content">
+            <div class="radio-title">Show popup immediately.</div>
+            <div class="radio-description">Selected text will be automatically sent to server for translation and displayed instantly.</div>
+          </div>
+        </label>
+
+        <label class="radio-option">
+          <input type="radio" name="popupMode" value="off" id="mode-off">
+          <div class="radio-content">
+            <div class="radio-title">Don't show icon or popup.</div>
+            <div class="radio-description">You can still translate by clicking the extension icon in the toolbar or using context menu (right-click).</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h2>Pronunciation:</h2>
+      <div class="checkbox-group">
+        <label class="checkbox-option">
+          <input type="checkbox" id="enableCambridgePronunciation" checked>
+          <div class="checkbox-content">
+            <div class="checkbox-title">Use Cambridge Dictionary pronunciation</div>
+            <div class="checkbox-description">For single English words, get accurate pronunciation from Cambridge instead of Google.</div>
+          </div>
+        </label>
+
+        <label class="checkbox-option">
+          <input type="checkbox" id="autoPlayAudio">
+          <div class="checkbox-content">
+            <div class="checkbox-title">Auto-play audio</div>
+            <div class="checkbox-description">Automatically play audio when displaying translation (for single words only).</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h2>Interface:</h2>
+      <div class="checkbox-group">
+        <label class="checkbox-option">
+          <input type="checkbox" id="showPhonetic" checked>
+          <div class="checkbox-content">
+            <div class="checkbox-title">Show IPA phonetics</div>
+            <div class="checkbox-description">Display International Phonetic Alphabet (IPA) symbols for English words.</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button id="saveBtn" class="btn btn-primary">Save</button>
+      <button id="resetBtn" class="btn btn-secondary">Reset to Default</button>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <div class="footer">
+      <p>Cambridge Translator v1.0.0</p>
+      <p>Pronunciation from <a href="https://dictionary.cambridge.org" target="_blank">Cambridge Dictionary</a></p>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

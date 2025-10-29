@@ -1,0 +1,28 @@
+/* Content script styles for tooltip */
+#cambridge-translator-tooltip {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#cambridge-translator-tooltip:hover {
+  background: #1557b0;
+}
+
+#quick-translate-btn svg {
+  transition: transform 0.2s;
+}
+
+#quick-translate-btn:hover svg {
+  transform: scale(1.1);
+}
