@@ -129,7 +129,6 @@ async function translateTextInline(text) {
 
         // If Cambridge doesn't have pronunciation, fallback to Google TTS
         if (!cambridgeData.phoneticUS && !cambridgeData.phoneticUK && !cambridgeData.audioUrlUS && !cambridgeData.audioUrlUK) {
-          console.log('⚠️ Cambridge has no pronunciation, using Google TTS as fallback');
           const googleTTSUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=gtx&tl=en&q=${encodeURIComponent(text)}`;
 
           return {
@@ -163,7 +162,6 @@ async function translateTextInline(text) {
       }
 
       // If Cambridge fails completely, use Google TTS as fallback
-      console.log('⚠️ Cambridge request failed, using Google TTS as fallback');
       const googleTTSUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=gtx&tl=en&q=${encodeURIComponent(text)}`;
 
       return {
@@ -208,7 +206,6 @@ async function translateTextInline(text) {
 async function fetchCambridgeData(word) {
   try {
     const url = `https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(word)}`;
-    console.log('Fetching from Cambridge:', url);
 
     const response = await fetch(url, {
       headers: {
@@ -217,30 +214,10 @@ async function fetchCambridgeData(word) {
     });
 
     if (!response.ok) {
-      console.error('Cambridge fetch failed:', response.status);
       return null;
     }
 
     const html = await response.text();
-    console.log('Cambridge HTML length:', html.length);
-
-    // Debug: Log samples of HTML around US pronunciation section
-    const usIndex = html.indexOf('class="us dpron');
-    if (usIndex !== -1) {
-      console.log('✅ Found US pronunciation section at index:', usIndex);
-      console.log('US section sample:', html.substring(usIndex, usIndex + 500));
-    } else {
-      console.log('⚠️ US pronunciation section not found');
-    }
-
-    // Check for audio elements
-    const audioIndex = html.indexOf('data-src-mp3');
-    if (audioIndex !== -1) {
-      console.log('✅ Found data-src-mp3 at index:', audioIndex);
-      console.log('Audio sample:', html.substring(Math.max(0, audioIndex - 100), audioIndex + 300));
-    } else {
-      console.log('⚠️ data-src-mp3 not found');
-    }
 
     // Parse HTML to extract phonetic and audio URL
     let phonetic = null;
@@ -260,7 +237,6 @@ async function fetchCambridgeData(word) {
       const match = html.match(pattern);
       if (match && match[1]) {
         phoneticUS = match[1].trim();
-        console.log('Found US phonetic:', phoneticUS);
         break;
       }
     }
@@ -275,7 +251,6 @@ async function fetchCambridgeData(word) {
       const match = html.match(pattern);
       if (match && match[1]) {
         phoneticUK = match[1].trim();
-        console.log('Found UK phonetic:', phoneticUK);
         break;
       }
     }
@@ -319,8 +294,6 @@ async function fetchCambridgeData(word) {
       }
     }
 
-    console.log('Parsed definitions:', definitions.length);
-
     // Find BOTH US and UK pronunciation - try multiple strategies
 
     // Strategy 1: Find ALL data-src-mp3 attributes
@@ -341,8 +314,6 @@ async function fetchCambridgeData(word) {
     const ampMatches = html.matchAll(/<amp-audio[^>]*src="([^"]+)"[^>]*>/g);
     const ampUrls = Array.from(ampMatches).map(match => match[1]);
     audioUrls = [...audioUrls, ...ampUrls];
-
-    console.log('All audio URLs found:', audioUrls);
 
     // Find BOTH US and UK audio
     const usAudioUrl = audioUrls.find(url =>
@@ -366,12 +337,10 @@ async function fetchCambridgeData(word) {
 
     if (usAudioUrl) {
       audioUrlUS = usAudioUrl.startsWith('http') ? usAudioUrl : 'https://dictionary.cambridge.org' + usAudioUrl;
-      console.log('✅ Found US audio:', audioUrlUS);
     }
 
     if (ukAudioUrl) {
       audioUrlUK = ukAudioUrl.startsWith('http') ? ukAudioUrl : 'https://dictionary.cambridge.org' + ukAudioUrl;
-      console.log('✅ Found UK audio:', audioUrlUK);
     }
 
     // For backward compatibility, set audioUrl to US (preferred)
@@ -380,8 +349,6 @@ async function fetchCambridgeData(word) {
     // If no audio found in HTML, try constructing the URL directly
     // Cambridge uses predictable URLs for audio files
     if (!audioUrl) {
-      console.log('⚠️ Audio not found in HTML, trying constructed URLs...');
-
       // Try common Cambridge audio URL patterns - US ONLY
       const possibleUrls = [
         // Standard paths
@@ -399,17 +366,12 @@ async function fetchCambridgeData(word) {
       // Try to verify one of these URLs works
       for (const testUrl of possibleUrls) {
         try {
-          console.log('Testing URL:', testUrl);
           const audioTest = await fetch(testUrl, { method: 'HEAD' });
           if (audioTest.ok) {
             audioUrl = testUrl;
-            console.log('✅ Found working audio URL:', audioUrl);
             break;
-          } else {
-            console.log('❌ Failed:', audioTest.status);
           }
         } catch (e) {
-          console.log('❌ Error:', e.message);
           // Continue to next URL
         }
       }
@@ -426,11 +388,6 @@ async function fetchCambridgeData(word) {
       definitions: definitions.length > 0 ? definitions : null
     };
 
-    console.log('Cambridge result:', result);
-    console.log('Definitions found:', definitions.length);
-    if (definitions.length > 0) {
-      console.log('Sample definition:', definitions[0]);
-    }
     return result;
 
   } catch (error) {

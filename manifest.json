@@ -3,16 +3,8 @@
   "name": "Cambridge Translator",
   "version": "1.0.0",
   "description": "Translator with Cambridge Dictionary pronunciation",
-  "permissions": [
-    "activeTab",
-    "storage",
-    "contextMenus",
-    "offscreen"
-  ],
-  "host_permissions": [
-    "https://dictionary.cambridge.org/*",
-    "https://translate.googleapis.com/*"
-  ],
+  "permissions": ["activeTab", "storage", "contextMenus", "offscreen"],
+  "host_permissions": ["https://dictionary.cambridge.org/*", "https://translate.googleapis.com/*"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

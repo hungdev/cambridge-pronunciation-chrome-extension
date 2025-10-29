@@ -177,10 +177,8 @@ async function translateText(text, source, target) {
   // Fetch pronunciation ONLY for single English words
   if (isSingleEnglishWord && (source === 'en' || source === 'auto')) {
     currentWord = text.trim().toLowerCase();
-    console.log('Fetching Cambridge data for:', currentWord);
     // Fetch Cambridge pronunciation (only for audio)
     const cambridgeData = await getCambridgeData(currentWord);
-    console.log('Cambridge data received:', cambridgeData);
     if (cambridgeData) {
       pronunciation = cambridgeData.phonetic;
       audioUrl = cambridgeData.audioUrl;
@@ -217,7 +215,6 @@ async function translateText(text, source, target) {
   } else {
     currentWord = null;
     currentAudioUrl = null;
-    console.log('Not a single English word or phrase/other language. Will translate without Cambridge pronunciation.');
   }
 
   // Always return translation with Google definitions (works for ALL languages and phrases)
