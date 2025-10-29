@@ -76,7 +76,7 @@ function createTranslationPopup() {
             <!-- Google TTS Pronunciation (for phrases/sentences) -->
             <div id="popup-pron-google" style="display: none; margin-bottom: 6px;">
               <div style="display: flex; align-items: center; gap: 8px; padding: 6px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #34a853;">
-                <span style="font-weight: 600; font-size: 13px; min-width: 100px;">🔊 Pronunciation</span>
+                <span style="font-weight: 600; font-size: 13px; min-width: 100px;">🔊 Google Pronunciation</span>
                 <button id="popup-play-audio-google" style="background: #34a853; color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; display: flex; padding: 0; margin-left: auto; align-items: center; justify-content: center;">
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="white" style="margin-left: 1px;">
                     <path d="M8 5v14l11-7z"/>

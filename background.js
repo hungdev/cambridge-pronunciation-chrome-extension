@@ -127,6 +127,26 @@ async function translateTextInline(text) {
         pronunciation = cambridgeData.phonetic;
         audioUrl = cambridgeData.audioUrl;
 
+        // If Cambridge doesn't have pronunciation, fallback to Google TTS
+        if (!cambridgeData.phoneticUS && !cambridgeData.phoneticUK && !cambridgeData.audioUrlUS && !cambridgeData.audioUrlUK) {
+          console.log('⚠️ Cambridge has no pronunciation, using Google TTS as fallback');
+          const googleTTSUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=gtx&tl=en&q=${encodeURIComponent(text)}`;
+
+          return {
+            text,
+            translation,
+            phonetic: null,
+            phoneticUS: null,
+            phoneticUK: null,
+            audioUrl: googleTTSUrl,
+            audioUrlUS: null,
+            audioUrlUK: null,
+            definitions: googleDefinitions,
+            isSingleWord: true,
+            isGoogleTTS: true  // Flag to indicate it's from Google TTS
+          };
+        }
+
         // Return both US and UK data with Google definitions
         return {
           text,
@@ -142,18 +162,22 @@ async function translateTextInline(text) {
         };
       }
 
-      // If Cambridge fails, still return Google definitions
+      // If Cambridge fails completely, use Google TTS as fallback
+      console.log('⚠️ Cambridge request failed, using Google TTS as fallback');
+      const googleTTSUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=gtx&tl=en&q=${encodeURIComponent(text)}`;
+
       return {
         text,
         translation,
         phonetic: null,
         phoneticUS: null,
         phoneticUK: null,
-        audioUrl: null,
+        audioUrl: googleTTSUrl,
         audioUrlUS: null,
         audioUrlUK: null,
         definitions: googleDefinitions,
-        isSingleWord: true
+        isSingleWord: true,
+        isGoogleTTS: true  // Flag to indicate it's from Google TTS
       };
     }
 
